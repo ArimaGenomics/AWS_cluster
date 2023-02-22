@@ -51,7 +51,7 @@ def read_lines(path: Path) -> List[str]:
     """
     with path.open("r") as fh:
         lines: List[str] = fh.readlines()
-        return [l.rstrip() for l in lines]
+        return [line.rstrip() for line in lines]
 
 
 def write_lines(path: Path, lines: List[str]) -> None:
@@ -92,10 +92,14 @@ class RuleLog:
 
         logs: List[RuleLog] = []
         while lines:
-            lines = list(dropwhile(lambda l: not l.startswith(cls.RULE_ERROR_PREFIX), iter(lines)))
+            lines = list(
+                dropwhile(lambda line: not line.startswith(cls.RULE_ERROR_PREFIX), iter(lines))
+            )
             if lines:
                 rule_name: str = lines[0].rstrip()[len(cls.RULE_ERROR_PREFIX) : -1]
-                lines = list(dropwhile(lambda l: not l.startswith(cls.LOG_PREFIX), iter(lines)))
+                lines = list(
+                    dropwhile(lambda line: not line.startswith(cls.LOG_PREFIX), iter(lines))
+                )
                 dir: Path = Path(".").absolute()
                 log_path = dir / lines[0].rstrip()[len(cls.LOG_PREFIX) : -len(cls.LOG_SUFFIX)]
                 lines = lines[1:]
@@ -144,16 +148,16 @@ def on_error(
 ) -> None:
     """Block of code that gets called if the snakemake pipeline exits with an error.
 
-     The `log` variable contains a path to the snakemake log file which can be parsed for
-     more information.  Summarizes information on failed jobs and writes it to the output
-     and also to an error summary file in the working directory.
+    The `log` variable contains a path to the snakemake log file which can be parsed for
+    more information.  Summarizes information on failed jobs and writes it to the output
+    and also to an error summary file in the working directory.
 
-     Args:
-         snakefile: the path to the snakefile
-         config: the configuration for the pipeline
-         log: the path to the snakemake log file
-         lines_per_log: the number of lines to pull from each log file, None to return all lines
-     """
+    Args:
+        snakefile: the path to the snakefile
+        config: the configuration for the pipeline
+        log: the path to the snakemake log file
+        lines_per_log: the number of lines to pull from each log file, None to return all lines
+    """
     try:
         # Build the preface
         preface: List[str] = [

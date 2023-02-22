@@ -1,0 +1,81 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Condition": {
+        "StringEqualsIfExists": {
+          "iam:PassedToService": [
+            "ecs-tasks.amazonaws.com",
+            "batch.amazonaws.com",
+            "codebuild.amazonaws.com"
+          ]
+        }
+      },
+      "Action": [
+        "iam:PassRole"
+      ],
+      "Resource": [
+        "arn:aws:iam::764294367323:role/parallelcluster/*"
+      ],
+      "Effect": "Allow",
+      "Sid": "IamPassRole"
+    },
+    {
+      "Condition": {
+        "StringEquals": {
+          "iam:AWSServiceName": [
+            "batch.amazonaws.com"
+          ]
+        }
+      },
+      "Action": [
+        "iam:CreateServiceLinkedRole",
+        "iam:DeleteServiceLinkedRole"
+      ],
+      "Resource": [
+        "arn:aws:iam::764294367323:role/aws-service-role/batch.amazonaws.com/*"
+      ],
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "codebuild:*"
+      ],
+      "Resource": "arn:aws:codebuild:*:764294367323:project/pcluster-*",
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "ecr:*"
+      ],
+      "Resource": "*",
+      "Effect": "Allow",
+      "Sid": "ECR"
+    },
+    {
+      "Action": [
+        "batch:*"
+      ],
+      "Resource": "*",
+      "Effect": "Allow",
+      "Sid": "Batch"
+    },
+    {
+      "Action": [
+        "events:*"
+      ],
+      "Resource": "*",
+      "Effect": "Allow",
+      "Sid": "AmazonCloudWatchEvents"
+    },
+    {
+      "Action": [
+        "ecs:DescribeContainerInstances",
+        "ecs:ListContainerInstances"
+      ],
+      "Resource": "*",
+      "Effect": "Allow",
+      "Sid": "ECS"
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+Region: us-west-1
+Image:
+  Os: alinux2
+HeadNode:
+  InstanceType: m6i.2xlarge
+  Networking:
+    SubnetId: subnet-527b8634
+  Ssh:
+    KeyName: fulcrum-dev
+  Imds:
+    Secured: false
+  CustomActions:
+    OnNodeConfigured:
+      Script: s3://arima-hpc/test-cluster/on-headnode-configured.sh
+  Iam:
+    S3Access:
+      - BucketName: arima-hpc
+        EnableWriteAccess: false
+    AdditionalIamPolicies:
+      - Policy: arn:aws:iam::764294367323:policy/arima-ebs-autoscale
+Scheduling:
+  Scheduler: slurm
+  SlurmQueues:
+    - Name: small
+      ComputeResources:
+        - Name: optimal
+          Instances:
+            - InstanceType: m6i.2xlarge
+            - InstanceType: r6i.2xlarge
+          MinCount: 0
+          MaxCount: 100
+      Networking:
+        SubnetIds:
+          - subnet-527b8634
+      CustomActions:
+        OnNodeConfigured:
+          Script: s3://arima-hpc/test-cluster/on-computenode-configured.sh
+      Iam:
+        S3Access:
+          - BucketName: arima-hpc
+            EnableWriteAccess: false
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::764294367323:policy/arima-ebs-autoscale
+    - Name: large
+      ComputeResources:
+        - Name: optimal
+          Instances:
+            - InstanceType: m6i.8xlarge
+            - InstanceType: r6i.8xlarge
+          MinCount: 0
+          MaxCount: 100
+      Networking:
+        SubnetIds:
+          - subnet-527b8634
+      CustomActions:
+        OnNodeConfigured:
+          Script: s3://arima-hpc/test-cluster/on-computenode-configured.sh
+      Iam:
+        S3Access:
+          - BucketName: arima-hpc
+            EnableWriteAccess: false
+        AdditionalIamPolicies:
+          - Policy: arn:aws:iam::764294367323:policy/arima-ebs-autoscale
+SharedStorage:
+  - MountDir: /shared
+    Name: shared
+    StorageType: Ebs
+    EbsSettings:
+      VolumeType: gp3
+      Size: 150

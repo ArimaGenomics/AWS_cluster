@@ -1,0 +1,40 @@
+diff --git a/bin/create-ebs-volume b/bin/create-ebs-volume
+index db23f7f..ee16b8c 100755
+--- a/bin/create-ebs-volume
++++ b/bin/create-ebs-volume
+@@ -28,7 +28,7 @@
+ #  IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ #  POSSIBILITY OF SUCH DAMAGE.
+
+-set -e
++set -xe
+
+ . /usr/local/amazon-ebs-autoscale/shared/utils.sh
+ initialize
+@@ -152,14 +152,14 @@ if [[ ! "$SIZE" ]]; then
+     error "missing required argument --size"
+ fi
+
+-alphabet=( {a..z} )
++alphabet=( {b..z} )
+
+ function get_next_logical_device() {
+     for letter in ${alphabet[@]}; do
+         # use /dev/xvdb* device names to avoid contention for /dev/sd* and /dev/xvda names
+         # only supported by HVM instances
+-        if [ ! -b "/dev/xvdb${letter}" ]; then
+-            echo "/dev/xvdb${letter}"
++        if [ ! -b "/dev/xvd${letter}" ]; then
++            echo "/dev/xvd${letter}"
+             break
+         fi
+     done
+@@ -177,7 +177,7 @@ function create_and_attach_volume() {
+     instance_tags=$(
+       aws ec2 describe-tags \
+         --region $region \
+-        --filters "Name=resource-id,Values=$instance_id" | jq -r .Tags | jq -c 'map({Key, Value})' | tr -d '[]"' | sed 's/{Key:/{Key=/g ; s/,Value:/,Value=/g ; s/{Key=aws:[^}]*}//g ; s/,\{2,\}/,/g ; s/,$//g ; s/^,//g'
++        --filters "Name=resource-id,Values=$instance_id" | jq -r .Tags | jq -c 'map({Key, Value})' | tr -d '[]"' | sed 's/{Key:/{Key=/g ; s/,Value:/,Value=/g ; s/{Key=aws:[^}]*}//g ; s/,\{2,\}/,/g ; s/,$//g ; s/^,//g ; s/, /_/g'
+       )
+
+     local max_attempts=10

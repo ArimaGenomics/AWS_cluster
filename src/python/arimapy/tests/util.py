@@ -30,9 +30,9 @@ class SnakemakeLogger(object):
             if d["level"] != "run_info":
                 return
             # NB: skip the first two and last lines
-            for counts_line in d["msg"].split("\n")[2:-1]:
+            for counts_line in d["msg"].split("\n")[3:-1]:
                 counts_line = counts_line.strip()
-                count, job = counts_line.split("\t")
+                job, count, _, _ = counts_line.split()
                 assert int(count) > 0, counts_line
 
                 self.rule_count[job] += int(count)

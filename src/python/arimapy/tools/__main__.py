@@ -10,7 +10,8 @@ import defopt
 from arimapy.tools.hello_world import hello_world
 
 TOOLS: List[Callable] = sorted(
-    [hello_world], key=lambda f: f.__name__,
+    [hello_world],
+    key=lambda f: f.__name__,
 )
 
 

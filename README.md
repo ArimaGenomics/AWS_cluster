@@ -1,6 +1,6 @@
 [![build](https://github.com/fulcrumgenomics/python-snakemake-skeleton/actions/workflows/pythonpackage.yml/badge.svg)](https://github.com/fulcrumgenomics/python-snakemake-skeleton/actions/workflows/pythonpackage.yml)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/fulcrumgenomics/fgbio/blob/main/LICENSE)
-[![Language](https://img.shields.io/badge/python-3.6.10-brightgreen)](https://www.python.org/downloads/release/python-3610/)
+[![Language](https://img.shields.io/badge/python-3.10.9-brightgreen)](https://www.python.org/downloads/release/python-3109/)
 
 This repo contains the following, in no particular order:
 

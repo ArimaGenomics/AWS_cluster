@@ -19,19 +19,25 @@ This repo contains the following, in no particular order:
 
 ## Install arima-tools
 
+- Ensure that you have python version >=3.9
+
 - [Install conda][conda-link]
 
-- Install `mamba`
+- Clone the repository
 ```bash
-conda install -c conda-forge mamba
+git clone https://github.com/ArimaGenomics/AWS_cluster.git
 ```
 
+- cd to source root
+```bash
+cd AWS_cluster
+```
 
 - Create the `arimapy` conda environment
 
 
 ```console
-mamba create -n arimapy \
+conda create -n arimapy \
   --override-channels -y \
   -c bioconda -c conda-forge -c defaults \
   --file conda-requirements-minimal.txt \
@@ -48,6 +54,12 @@ conda activate arimapy
 
 ```bash
 pip install -r pip-requirements.txt
+```
+
+- Setup `awsv2` (Ensure that you have your AWS access key and secret handy)
+```bash
+awsv2 --install
+awsv2 configure
 ```
 
 - Install `arimapy` (in developer mode)

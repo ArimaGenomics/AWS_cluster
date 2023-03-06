@@ -78,6 +78,6 @@ rule upload_to_s3:
         "logs/upload_to_s3.log"
     shell:
         """
-            (aws s3 sync --exclude .snakemake/* . {params.output_bucket} && \
+            (aws s3 sync --exclude .snakemake/* --exclude *.simg . {params.output_bucket} && \
                 touch s3.transfer.done ) &> {log}
         """

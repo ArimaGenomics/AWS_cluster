@@ -19,7 +19,7 @@ from arimapy.pipeline import snakemake_utils
 ################################################################################
 
 all_terminal_files: List[Path] = [Path("message.txt")]
-singularity_image = "docker://hello-world:latest"
+singularity_image = "docker://bash:latest"
 
 ################################################################################
 # Snakemake rules

@@ -19,6 +19,7 @@ from arimapy.pipeline import snakemake_utils
 ################################################################################
 
 all_terminal_files: List[Path] = [Path("message.txt")]
+singularity_image = "docker://hello-world:latest"
 
 ################################################################################
 # Snakemake rules
@@ -40,5 +41,6 @@ rule hello_world:
         "logs/hello_world.log"
     benchmark:
         "benchmarks/hello_world.txt"
+    singularity: singularity_image
     shell:
         "(echo Hello World > {output.txt}) &> {log}"

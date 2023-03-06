@@ -80,7 +80,7 @@ arima-tools -h
 snakemake --snakefile src/snakemake/hello_world.smk -j 1
 ```
 
-- Create a test cluster
+- Create a test cluster (Replace `test-cluster` with your cluster name)
 ```bash
 pcluster create-cluster --cluster-configuration aws/config/test-cluster-config.yaml --cluster-name test-cluster --region us-west-1
 ```

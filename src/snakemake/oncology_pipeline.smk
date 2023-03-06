@@ -19,7 +19,7 @@ log_dir.mkdir(exist_ok=True)
 log_file: Path = log_dir / "oncology_pipeline.log"
 log_file.touch(exist_ok=True)
 
-singularity_image = "arimaxiang/arima_oncology:0.4"
+singularity_image = "docker://arimaxiang/arima_oncology:0.4"
 
 input_bucket: str = config.get("input_bucket")
 output_bucket: str = config.get("output_bucket")

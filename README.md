@@ -56,7 +56,7 @@ pip install -r pip-requirements.txt
 python setup.py develop
 ```
 
-- Validate the install via the help message
+- Validate the installation via the help message
 
 ```bash
 arima-tools -h

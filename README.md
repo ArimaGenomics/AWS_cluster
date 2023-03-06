@@ -130,10 +130,10 @@ pcluster ssh -n test-cluster
 
 - Submit a simple test job:
 ```bash
- sbatch << EOF
-> #!/bin/sh
-> echo "Testing cluster"
-> EOF
+sbatch << EOF
+#!/usr/bin/env bash
+echo "Testing cluster"
+EOF
 ```
 
 - Monitor your job:
@@ -146,6 +146,15 @@ squeue
 ```
 
 - Testing snakemake on the cluster:
+```bash
+sbatch << EOF
+#!/usr/bin/env bash
+cat ~/.bashrc
+source ~/.bashrc
+conda activate arima-py
+/shared/AWS_cluster/src/scripts/run_snakemake.sh -s /shared/AWS_cluster/src/snakemake/hello_world.smk -o . -p /shared/singularity
+EOF
+```
 
 - Cluster cleanup
 ```bash

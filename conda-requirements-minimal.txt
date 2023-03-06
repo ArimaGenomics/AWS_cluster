@@ -3,7 +3,7 @@
 
 # Packages required to run Snakemake
 python=3.10.9
-snakemake-minimal=7.22.0
+snakemake=7.22.0
 
 # Packages used by the arimapy module
 attrs=22.2.0

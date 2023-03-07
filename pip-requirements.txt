@@ -1,3 +1,4 @@
 # All packages get installed in order.
 distutils-strtobool==0.1.0
 aws-parallelcluster>=3.0.0
+awscliv2>=2.2.0

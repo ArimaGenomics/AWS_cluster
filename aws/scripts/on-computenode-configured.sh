@@ -27,12 +27,29 @@ singularity version
 
 # Assume ec2-user for the remaining commands
 # Install miniconda
-cd /shared || exit
 su ec2-user <<EOF
+  #!/usr/bin/env bash
+
+  set -x
+  wget -q https://repo.anaconda.com/miniconda/Miniconda3-py310_23.1.0-1-Linux-x86_64.sh
   export HOME=/home/ec2-user
-  /shared/miniconda3/bin/conda init
+  /bin/bash Miniconda3-py310_23.1.0-1-Linux-x86_64.sh -b
+  conda init
   source /home/ec2-user/.bashrc
 
-  # Test arima-tools
+  # Install arima-tools
+  git clone https://github.com/ArimaGenomics/AWS_cluster.git
+  cd AWS_cluster || exit
+  conda install -y -c conda-forge mamba
+
+  mamba create -n arima-py \
+    --override-channels -y \
+    -c bioconda -c conda-forge -c defaults \
+    --file conda-requirements-minimal.txt \
+    --file conda-requirements-test.txt
+
+  conda activate arima-py
+  pip install -r pip-requirements.txt
+  python setup.py develop
   arima-tools -h
 EOF

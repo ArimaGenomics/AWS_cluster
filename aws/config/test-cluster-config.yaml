@@ -6,7 +6,7 @@ HeadNode:
   Networking:
     SubnetId: subnet-527b8634
   Ssh:
-    KeyName: fulcrum-dev
+    KeyName: pcluster
   Imds:
     Secured: false
   CustomActions:
